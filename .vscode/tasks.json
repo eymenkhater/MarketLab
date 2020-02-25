@@ -1,0 +1,103 @@
+{
+    "version": "2.0.0",
+    "tasks": [{
+            "label": "MarketLab Solution Build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/MarketLab.sln",
+                "/property:GenerateFullPaths=true"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "MarketLab.API Build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MarketLab.API/MarketLab.API.csproj",
+                "/property:GenerateFullPaths=true"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "MarketLab.Application Build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MarketLab.Application/MarketLab.Application.csproj",
+                "/property:GenerateFullPaths=true"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "MarketLab.Domain Build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MarketLab.Domain/MarketLab.Domain.csproj",
+                "/property:GenerateFullPaths=true"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "MarketLab.Infra.Data Build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MarketLab.Infra.Data/MarketLab.Infra.Data.csproj",
+                "/property:GenerateFullPaths=true"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/MarketLab.API/MarketLab.API.csproj",
+                "/property:GenerateFullPaths=true"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/src/MarketLab.API/MarketLab.API.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

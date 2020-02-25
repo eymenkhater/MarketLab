@@ -1,0 +1,17 @@
+//NETCORE: => EFCORE MIGRATION COMMANDS
+
+    ADD MIGRATION: dotnet ef migrations add <migrationName>
+        * dotnet ef migrations add marketlab --context MarketLabDbContext --output-dir Migrations/MarketLabDb
+
+    UPDATE DATABASE: dotnet ef database update
+        * dotnet ef database update --context MarketLabDbContext
+
+
+//DOCKER: => POSTGRES SETUP COMMANDS
+
+    POSTGRES PULL: docker pull postgres 
+    POSTGRES RUN: docker run --name pg-docker -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+
+    MSSQL PULL: docker pull microsoft/mssql-server-linux:2017-latest
+    MSSQL RUN: docker run -v /var/opt/mssql -d --name mssql-server-linux -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=P@55w0rd' -e 'MSSQL_PID=Developer' -p 1433:1433 microsoft/mssql-server-linux:2017-latest
+    
