@@ -15,7 +15,7 @@ namespace MarketLab.Infra.Data.EFCore
         #endregion
 
         #region List Async
-        public async Task<IQueryable<T>> ListAsync() => (await _dbContext.Set<T>().AsNoTracking().ToListAsync()).AsQueryable();
+        // public async Task<IQueryable<T>> ListAsync() => (await _dbContext.Set<T>().AsNoTracking().ToListAsync()).AsQueryable();
         #endregion
 
         #region Get By Id Async
