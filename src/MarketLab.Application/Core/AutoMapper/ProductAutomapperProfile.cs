@@ -1,5 +1,5 @@
 using AutoMapper;
-using MarketLab.Application.Products.Dtos.Requests;
+using MarketLab.Application.Products.Models.Requests;
 using MarketLab.Domain.Products.Entitites;
 
 namespace MarketLab.Application.Core.AutoMapper

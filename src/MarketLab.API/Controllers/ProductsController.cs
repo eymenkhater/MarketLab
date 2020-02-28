@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using MarketLab.Application.Products.Dtos.Requests;
+using MarketLab.Application.Products.Models.Requests;
 using MarketLab.Application.Products.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

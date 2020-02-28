@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using MarketLab.Application.Products.Dtos.Requests;
+using MarketLab.Application.Products.Models.Requests;
 using MarketLab.Domain.Core.Interfaces.Data.Repositories;
 using MarketLab.Domain.Products.Entitites;
 

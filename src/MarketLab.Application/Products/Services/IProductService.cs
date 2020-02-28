@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MarketLab.Application.Products.Dtos.Requests;
+using MarketLab.Application.Products.Models.Requests;
 using MarketLab.Domain.Products.Entitites;
 
 namespace MarketLab.Application.Products.Services

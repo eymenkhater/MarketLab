@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace MarketLab.Application.Products.Dtos.Requests
+namespace MarketLab.Application.Products.Models.Requests
 {
     public class SaveProductRequest
     {
