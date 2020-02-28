@@ -1,4 +1,6 @@
 using MarketLab.Domain.Core.Interfaces.Data;
+using MarketLab.Domain.Core.Interfaces.Data.Repositories;
+using MarketLab.Infra.Data.EFCore.Repositories.Base;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarketLab.Infra.Data.EFCore.StartupSetup
@@ -10,6 +12,10 @@ namespace MarketLab.Infra.Data.EFCore.StartupSetup
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
             services.AddScoped(typeof(IUnitOfWorkRepository<>), typeof(EFUnitOfWorkRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IResourceRepository, ResourceRepository>();
         }
     }
 }
