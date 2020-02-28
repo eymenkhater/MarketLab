@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MarketLab.Application.Products.Models.Requests;
 using MarketLab.Application.Products.Services;
@@ -68,7 +69,7 @@ namespace MarketLab.API.Controllers
 
         #region Import Async
         [HttpPost("import")]
-        public async Task<IActionResult> ImportAsync([FromBody] ImportProductsRequest request)
+        public async Task<IActionResult> ImportAsync([FromBody] List<ImportProductRequest> request)
         {
             await _productService.ImportAsync(request);
             return Ok();

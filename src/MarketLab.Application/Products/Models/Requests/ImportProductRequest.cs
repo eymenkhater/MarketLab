@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace MarketLab.Application.Products.Models.Requests
 {
-    public class ImportProductsRequest
+    public class ImportProductRequest : SaveProductRequest
     {
-        public List<CreateProductRequest> Products { get; set; }
+        public string BrandName { get; set; }
     }
 }
