@@ -1,5 +1,6 @@
 using MarketLab.Domain.Core.Interfaces.Data;
 using MarketLab.Domain.Core.Interfaces.Data.Repositories;
+using MarketLab.Infra.Data.EFCore.Repositories;
 using MarketLab.Infra.Data.EFCore.Repositories.Base;
 using Microsoft.Extensions.DependencyInjection;
 

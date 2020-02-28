@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using MarketLab.Domain.Core.Interfaces.Data;
 using MarketLab.Domain.Core.Interfaces.Data.Repositories;
 using MarketLab.Domain.Products.Entitites;
+using MarketLab.Infra.Data.EFCore.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
-namespace MarketLab.Infra.Data.EFCore.Repositories.Base
+namespace MarketLab.Infra.Data.EFCore.Repositories
 {
     public class ProductRepository : MarketLabContextRepository<Product>, IProductRepository
     {

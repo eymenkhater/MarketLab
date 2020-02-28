@@ -6,7 +6,7 @@ namespace MarketLab.Application.StartupSetup
 {
     public static class ApplicationSetup
     {
-        public static void MarketLabApplicationSetup(this IServiceCollection services)
+        public static void AddMarketLabApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ProductAutomapperProfile));
         }

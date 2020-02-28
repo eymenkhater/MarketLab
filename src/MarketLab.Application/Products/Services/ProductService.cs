@@ -12,16 +12,19 @@ namespace MarketLab.Application.Products.Services
     {
         #region Fields
         private readonly IProductRepository _productRepository;
+        private readonly IBrandRepository _brandRepository;
         private readonly IMapper _mapper;
         #endregion
 
         #region CTOR
         public ProductService(
             IProductRepository productRepository,
+            IBrandRepository brandRepository,
             IMapper mapper
         )
         {
             _productRepository = productRepository;
+            _brandRepository = brandRepository;
             _mapper = mapper;
         }
         #endregion
@@ -50,6 +53,8 @@ namespace MarketLab.Application.Products.Services
         public async Task ImportAsync(ImportProductsRequest request)
         {
             var products = await _productRepository.ListAsync();
+            var brands = await _brandRepository.ListAsync();
+
             var newProducts = new List<Product>();
             var updateProducts = new List<Product>();
 
