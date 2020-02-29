@@ -11,7 +11,6 @@ namespace MarketLab.Application.Core.AutoMapper
             CreateMap<Product, SaveProductRequest>().ReverseMap();
             CreateMap<Product, CreateProductRequest>().ReverseMap();
             CreateMap<Product, UpdateProductRequest>().ReverseMap();
-            CreateMap<ProductDimension, SaveProductDimensionRequest>().ReverseMap();
             CreateMap<ProductImage, SaveProductImageRequest>().ReverseMap();
         }
     }

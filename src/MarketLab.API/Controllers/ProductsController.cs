@@ -20,7 +20,8 @@ namespace MarketLab.API.Controllers
         #region CTOR
         public ProductsController(
             ILogger<ProductsController> logger,
-            IProductService productService)
+            IProductService productService
+            )
         {
             _logger = logger;
             _productService = productService;

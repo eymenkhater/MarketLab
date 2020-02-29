@@ -10,10 +10,10 @@ namespace MarketLab.Infra.Data.EFCore.Persistence.Configurations
         {
             BaseConfiguration.Configure<Product>(builder);
             builder.Property(q => q.Name).HasMaxLength(500).IsRequired();
-            builder.Ignore(q => q.Brand);
-            builder.Ignore(q => q.ProductDimension);
-            builder.Ignore(q => q.ProductImages);
-            builder.Ignore(q => q.ProductResources);
+
+            builder.HasOne(q => q.Brand).WithMany(q => q.Products)
+                    .HasForeignKey(q => q.BrandId)
+                    .OnDelete(DeleteBehavior.NoAction).IsRequired(false);
         }
     }
 }

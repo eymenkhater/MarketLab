@@ -80,48 +80,9 @@ namespace MarketLab.API.Migrations.MarketLabDb
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BrandId");
+
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("MarketLab.Domain.Products.Entitites.ProductDimension", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<decimal>("Depth")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal>("Height")
-                        .HasColumnType("numeric");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<decimal>("Mass")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("character varying(10)")
-                        .HasMaxLength(10);
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<decimal>("Width")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductDimensions");
                 });
 
             modelBuilder.Entity("MarketLab.Domain.Products.Entitites.ProductImage", b =>
@@ -153,6 +114,8 @@ namespace MarketLab.API.Migrations.MarketLabDb
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("ProductImages");
                 });
 
@@ -169,8 +132,8 @@ namespace MarketLab.API.Migrations.MarketLabDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
@@ -188,6 +151,8 @@ namespace MarketLab.API.Migrations.MarketLabDb
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductResources");
                 });
@@ -222,6 +187,32 @@ namespace MarketLab.API.Migrations.MarketLabDb
                     b.HasKey("Id");
 
                     b.ToTable("Resources");
+                });
+
+            modelBuilder.Entity("MarketLab.Domain.Products.Entitites.Product", b =>
+                {
+                    b.HasOne("MarketLab.Domain.Products.Entitites.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("MarketLab.Domain.Products.Entitites.ProductImage", b =>
+                {
+                    b.HasOne("MarketLab.Domain.Products.Entitites.Product", null)
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MarketLab.Domain.Products.Entitites.ProductResource", b =>
+                {
+                    b.HasOne("MarketLab.Domain.Products.Entitites.Product", null)
+                        .WithMany("ProductResources")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

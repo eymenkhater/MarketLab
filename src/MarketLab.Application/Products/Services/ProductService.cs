@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MarketLab.Application.Brands.Models.Requests;
 using MarketLab.Application.Products.Models.Requests;
 using MarketLab.Domain.Core.Interfaces.Data.BulkRepositories;
 using MarketLab.Domain.Core.Interfaces.Data.Repositories;
@@ -13,22 +14,25 @@ namespace MarketLab.Application.Products.Services
     {
         #region Fields
         private readonly IProductRepository _productRepository;
-        private readonly IBulkProductRepository _bulkProductRepository;
         private readonly IBrandRepository _brandRepository;
+        private readonly IResourceRepository _resourceRepository;
+        private readonly IBulkProductRepository _bulkProductRepository;
         private readonly IMapper _mapper;
         #endregion
 
         #region CTOR
         public ProductService(
             IProductRepository productRepository,
-            IBulkProductRepository bulkProductRepository,
             IBrandRepository brandRepository,
+            IResourceRepository resourceRepository,
+            IBulkProductRepository bulkProductRepository,
             IMapper mapper
         )
         {
             _productRepository = productRepository;
-            _bulkProductRepository = bulkProductRepository;
             _brandRepository = brandRepository;
+            _resourceRepository = resourceRepository;
+            _bulkProductRepository = bulkProductRepository;
             _mapper = mapper;
         }
         #endregion
@@ -66,13 +70,11 @@ namespace MarketLab.Application.Products.Services
             {
                 var product = products.FirstOrDefault(q => q.Name.ToLower() == item.Name.Trim().ToLower());
 
-                if (!string.IsNullOrEmpty(item.BrandName))
-                    product.Brand = brands.FirstOrDefault(q => q.Name.ToLower() == item.BrandName.Trim().ToLower());
-
-                product.Brand = product.Brand ?? new Brand() { Name = item.BrandName };
-
                 bool doesAvaliable = product != null;
                 product = product ?? new Product();
+
+                if (item.Brand != null)
+                    product.Brand = brands.FirstOrDefault(q => q.Name.ToLower() == item.Brand.Name.Trim().ToLower());
 
                 product = _mapper.Map<ImportProductRequest, Product>(item, product);
 
@@ -80,6 +82,7 @@ namespace MarketLab.Application.Products.Services
                     updateProducts.Add(product);
                 else
                     newProducts.Add(product);
+
             }
 
             await _bulkProductRepository.BulkInsertAsync(newProducts);

@@ -8,7 +8,6 @@ namespace MarketLab.Domain.Core.Interfaces.Data
     {
         DbSet<Brand> Brands { get; set; }
         DbSet<Product> Products { get; set; }
-        DbSet<ProductDimension> ProductDimensions { get; set; }
         DbSet<ProductImage> ProductImages { get; set; }
         DbSet<ProductResource> ProductResources { get; set; }
         DbSet<Resource> Resources { get; set; }

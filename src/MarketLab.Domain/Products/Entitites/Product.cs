@@ -18,7 +18,6 @@ namespace MarketLab.Domain.Products.Entitites
 
         #region Relations
         public Brand Brand { get; set; }
-        public ProductDimension ProductDimension { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }
         public ICollection<ProductResource> ProductResources { get; set; }
 

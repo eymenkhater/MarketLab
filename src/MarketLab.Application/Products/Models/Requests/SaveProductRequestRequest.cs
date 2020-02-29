@@ -6,7 +6,6 @@ namespace MarketLab.Application.Products.Models.Requests
     {
         public string Name { get; set; }
         public string Code { get; set; }
-        public SaveProductDimensionRequest ProductDimension { get; set; }
         public List<SaveProductImageRequest> ProductImages { get; set; }
         public SaveProductResourceRequest ProductResource { get; set; }
 

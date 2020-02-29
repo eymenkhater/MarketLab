@@ -13,7 +13,6 @@ namespace MarketLab.Infra.Data.EFCore.Persistence
 
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductDimension> ProductDimensions { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductResource> ProductResources { get; set; }
         public DbSet<Resource> Resources { get; set; }
