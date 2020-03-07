@@ -11,6 +11,7 @@ namespace MarketLab.Domain.Products.Entitites
         {
             ProductImages = new HashSet<ProductImage>();
             ProductResources = new HashSet<ProductResource>();
+            BrandId = 1;
         }
         public int BrandId { get; set; }
         public string Name { get; set; }

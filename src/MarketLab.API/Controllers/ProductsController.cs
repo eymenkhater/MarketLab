@@ -69,10 +69,10 @@ namespace MarketLab.API.Controllers
         #endregion
 
         #region Import Async
-        [HttpPost("import")]
-        public async Task<IActionResult> ImportAsync([FromBody] List<ImportProductRequest> request)
+        [HttpPost("import/{resourceId}")]
+        public async Task<IActionResult> ImportAsync(int resourceId, [FromBody] List<ImportProductRequest> request)
         {
-            await _productService.ImportAsync(request);
+            await _productService.ImportAsync(resourceId, request);
             return Ok();
         }
         #endregion

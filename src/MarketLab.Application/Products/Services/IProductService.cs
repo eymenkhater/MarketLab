@@ -12,6 +12,6 @@ namespace MarketLab.Application.Products.Services
         Task<Product> CreateAsync(CreateProductRequest request);
         Task<bool> UpdateAsync(UpdateProductRequest request);
         Task<bool> DeleteAsync(int id);
-        Task ImportAsync(List<ImportProductRequest> requestProducts);
+        Task ImportAsync(int resourceId, List<ImportProductRequest> requestProducts);
     }
 }
