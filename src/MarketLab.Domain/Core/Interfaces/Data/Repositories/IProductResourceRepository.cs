@@ -4,9 +4,8 @@ using MarketLab.Domain.Products.Entitites;
 
 namespace MarketLab.Domain.Core.Interfaces.Data.Repositories
 {
-    public interface IProductResourceRepository
+    public interface IProductResourceRepository : ISelectableRepository<ProductResource>
     {
-        Task<List<ProductResource>> ListAsync();
-        Task<ProductResource> GetAsync(int id);
+        Task<List<ProductResource>> ListAsync(int resourceId);
     }
 }

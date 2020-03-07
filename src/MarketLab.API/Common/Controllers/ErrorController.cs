@@ -32,7 +32,7 @@ namespace MarketLab.API.Common.Controllers
         {
             var exceptionHandler = await Task.FromResult(_httpContextAccessor.HttpContext.Features.Get<IExceptionHandlerPathFeature>());
 
-            var responseDto = new ResponseBase<object>(
+            var ResponseBase = new ResponseBase<object>(
                 code: exceptionHandler.Error.HResult,
                 success: false,
                 message: "Error",
@@ -41,7 +41,7 @@ namespace MarketLab.API.Common.Controllers
                 data: default
             );
 
-            return new ObjectResult(responseDto)
+            return new ObjectResult(ResponseBase)
             {
                 StatusCode = StatusCodes.Status500InternalServerError,
             };

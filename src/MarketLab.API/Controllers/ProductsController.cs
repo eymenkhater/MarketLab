@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using MarketLab.API.Common.Controllers;
+using MarketLab.Application.Products.Commands.ImportProducts;
 using MarketLab.Application.Products.Models.Requests;
-using MarketLab.Application.Products.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -10,70 +10,27 @@ namespace MarketLab.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : MarketLabController
     {
         #region Fields
         private readonly ILogger<ProductsController> _logger;
-        private readonly IProductService _productService;
         #endregion
 
         #region CTOR
         public ProductsController(
-            ILogger<ProductsController> logger,
-            IProductService productService
+            ILogger<ProductsController> logger
             )
         {
             _logger = logger;
-            _productService = productService;
         }
         #endregion
 
-        #region List Async
-        [HttpGet]
-        public async Task<IActionResult> ListAsync()
-        {
-            return default;
-        }
-        #endregion
-
-        #region Get Async
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync([FromQuery, Required]int id)
-        {
-            return default;
-        }
-        #endregion
-
-        #region Create Async
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] CreateProductRequest request)
-        {
-            return default;
-        }
-        #endregion
-
-        #region Update Async
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] UpdateProductRequest request)
-        {
-            return default;
-        }
-        #endregion
-
-        #region Delete Async
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAsync([FromQuery] int id)
-        {
-            return default;
-        }
-        #endregion
 
         #region Import Async
         [HttpPost("import/{resourceId}")]
-        public async Task<IActionResult> ImportAsync(int resourceId, [FromBody] List<ImportProductRequest> request)
+        public async Task<IActionResult> ImportAsync(int resourceId, [FromBody] List<ImportProductRequest> products)
         {
-            await _productService.ImportAsync(resourceId, request);
-            return Ok();
+            return Ok(await _mediator.Send(new ImportProductsCommand(resourceId, products)));
         }
         #endregion
 

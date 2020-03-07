@@ -71,51 +71,6 @@ namespace MarketLab.Application.Products.Services
 
             var newProductResources = new List<ProductResource>();
             var updateProductResources = new List<ProductResource>();
-
-            foreach (var item in requestProducts)
-            {
-                if (item.Brand != null)
-                {
-                    var brand = brands.FirstOrDefault(q => q.Name.ToLower() == item.Brand.Name.Trim().ToLower()) ?? new Brand();
-                    brand = _mapper.Map<SaveBrandRequest, Brand>(item.Brand, brand);
-
-                    if (brand.Id == 0)
-                        newBrands.Add(brand);
-                    else
-                        updateBrands.Add(brand);
-                }
-
-                var product = products.FirstOrDefault(q => q.Name.ToLower() == item.Name.Trim().ToLower()) ?? new Product();
-                var productResource = product.ProductResources.FirstOrDefault(q => q.ResourceId == resourceId && q.ProductId == product.Id);
-
-
-                productResource = _mapper.Map<SaveProductResourceRequest, ProductResource>(item.ProductResource, productResource);
-                productResource.ResourceId = resourceId;
-
-                if (productResource.Id == 0)
-                    newProductResources.Add(productResource);
-                else
-                    updateProductResources.Add(productResource);
-
-                bool doesAvaliable = product.Id > 0;
-
-                if (item.Brand != null)
-                    product.Brand = brands.FirstOrDefault(q => q.Name.ToLower() == item.Brand.Name.Trim().ToLower());
-
-                product = _mapper.Map<ImportProductRequest, Product>(item, product);
-                product.Brand = _mapper.Map<Brand>(item.Brand);
-
-                if (doesAvaliable)
-                    updateProducts.Add(product);
-                else
-                    newProducts.Add(product);
-
-            }
-
-            await _bulkProductRepository.BulkInsertAsync(newProducts);
-
-            await _bulkProductRepository.BulkUpdateAsync(updateProducts);
-
         }
 
 

@@ -8,6 +8,7 @@ namespace MarketLab.Infra.Data.EFCore.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductResource> builder)
         {
+            builder.Property(q => q.IdentifierUrl).IsRequired();
             BaseConfiguration.Configure<ProductResource>(builder);
         }
     }
