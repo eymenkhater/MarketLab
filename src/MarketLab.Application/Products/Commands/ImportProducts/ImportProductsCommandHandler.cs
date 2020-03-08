@@ -53,6 +53,7 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
             var brands = await _brandRepository.ListAsync();
             var productResources = await _productResourceRepository.ListAsync(request.ResourceId);
             var newResources = new List<ProductResource>();
+            var newProductImages = new List<ProductImage>();
             var updateResources = new List<ProductResource>();
             var brandList = new List<Brand>();
 
@@ -109,6 +110,7 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
             var newProducts = brandList.Where(q => q.Id > 0).SelectMany(q => q.Products).ToList();
 
             await _bulkBrandRepository.BulkInsertAsync(newBrands);
+            await _bulkProductRepository.BulkInsertAsync(newProducts);
             await _bulkProductResourceRepository.BulkInsertAsync(newResources);
             await _bulkProductResourceRepository.BulkUpdateAsync(updateResources);
 

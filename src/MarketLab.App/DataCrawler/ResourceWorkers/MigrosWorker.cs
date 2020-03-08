@@ -58,7 +58,7 @@ namespace DataCrawler.ResourceWorkers
 
                 product.Name = imageNode.Attributes["alt"]?.Value;
                 product.ProductResource.IdentifierUrl = BASE_URL + node.Attributes["href"]?.Value;
-                product.ProductResource.Price = Decimal.Parse(node.Attributes["data-monitor-price"].Value?.Replace(",", "."));
+                product.ProductResource.Price = Math.Round(Convert.ToDecimal(node.Attributes["data-monitor-price"]?.Value, culture), 2);
                 product.Brand.Name = culture.TextInfo.ToTitleCase(node.Attributes["data-monitor-brand"]?.Value);
                 product.ProductImages.Add(new SaveProductImageRequest()
                 {
@@ -68,13 +68,13 @@ namespace DataCrawler.ResourceWorkers
                 products.Add(product);
             }
 
-            Console.WriteLine($"BATCH ENDED FOR : {fullUrl} => TOTAL PRODUCT COUNT {products.Count}");
-
             var bodyData = new StringContent(JsonSerializer.Serialize(products), Encoding.UTF8, "application/json");
             var response = _httpClient.PostAsync("http://localhost:5000/products/import/5", bodyData).Result;
 
             if (response.StatusCode != HttpStatusCode.OK)
                 Console.WriteLine(response.StatusCode.ToString());
+
+            Console.WriteLine($"BATCH ENDED FOR : {fullUrl} => TOTAL PRODUCT COUNT {products.Count}");
 
             int totalPage = _doc.DocumentNode.SelectNodes("//ul[@class='pagination']/li/a")
                                                 .Select(q => Convert.ToInt32(q.Attributes["data-page"].Value))
