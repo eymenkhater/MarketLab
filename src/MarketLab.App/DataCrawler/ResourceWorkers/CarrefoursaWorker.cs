@@ -12,11 +12,11 @@ using HtmlAgilityPack;
 
 namespace DataCrawler.ResourceWorkers
 {
-    public static class MigrosWorker
+    public static class CarrefoursaWorker
     {
         private static HttpClient _httpClient = new HttpClient();
         private static CultureInfo culture = new CultureInfo("tr-TR", false);
-        private const string BASE_URL = "https://www.migros.com.tr";
+        private const string BASE_URL = "https://www.carrefoursa.com";
 
         public static void Start()
         {
@@ -24,31 +24,39 @@ namespace DataCrawler.ResourceWorkers
             var _doc = new HtmlDocument();
             _doc.LoadHtml(body);
 
-            var categoryNodes = _doc.DocumentNode.SelectNodes("//li[@class='category-list-item category-title']/a");
+            var categoryNodes = _doc.DocumentNode.SelectNodes("//ul[@class='nav nav-pills navbar-nav pull-md-left']/li/ul/li/a");
             var categoryUrlList = categoryNodes.Where(q => q.Attributes["href"].Value != "/kampanyalar")
-            .Select(q => $"{BASE_URL}{q.Attributes["href"].Value}").ToList();
+                                                .Select(q => $"{BASE_URL}{q.Attributes["href"].Value}").ToList();
 
             foreach (var url in categoryUrlList)
-            {
                 GetProductsFromCategoryPage(url);
-            }
         }
 
         public static void GetProductsFromCategoryPage(string url, int page = 1)
         {
-            string fullUrl = $"{url}?sayfa={page++}";
+            string fullUrl = $"{url}?page={page++}";
+
             var body = HttpExtension.LoadBody(fullUrl);
             var _doc = new HtmlDocument();
             _doc.LoadHtml(body);
 
-            var productNodes = _doc.DocumentNode.SelectNodes("//a[@class='product-link']");
+            var productNodes = _doc.DocumentNode.SelectNodes("//div[@class='product_click']");
             var products = new List<ImportProductRequest>();
+
 
             Console.WriteLine($"BATCH STARTED FOR : {fullUrl}");
 
             foreach (var node in productNodes)
             {
-                var imageNode = node.ChildNodes.FirstOrDefault();
+                string imageUrl = node.SelectSingleNode("a/span/img").Attributes["data-src"]?.Value;
+                var imgArr = imageUrl.Split('/').ToList();
+                try
+                {
+                    imgArr.RemoveAt(3); imgArr.RemoveAt(3); imgArr.RemoveAt(3);
+                    imageUrl = string.Join("/", imgArr);
+                }
+                catch { imageUrl = default; }
+
                 var product = new ImportProductRequest()
                 {
                     Brand = new SaveBrandRequest(),
@@ -56,13 +64,13 @@ namespace DataCrawler.ResourceWorkers
                     ProductImages = new List<SaveProductImageRequest>()
                 };
 
-                product.Name = imageNode.Attributes["alt"]?.Value;
-                product.ProductResource.IdentifierUrl = BASE_URL + node.Attributes["href"]?.Value;
-                product.ProductResource.Price = Decimal.Parse(node.Attributes["data-monitor-price"].Value?.Replace(",", "."));
-                product.Brand.Name = culture.TextInfo.ToTitleCase(node.Attributes["data-monitor-brand"]?.Value);
+                product.Name = culture.TextInfo.ToTitleCase(node.SelectSingleNode("a/span/img").Attributes["title"]?.Value);
+                product.ProductResource.IdentifierUrl = BASE_URL + node.SelectSingleNode("a").Attributes["href"]?.Value;
+                product.ProductResource.Price = Math.Round(Decimal.Parse(node.SelectSingleNode("input[@name='productPricePost']").Attributes["value"]?.Value), 2);
+                product.Brand.Name = culture.TextInfo.ToTitleCase(node.SelectSingleNode("input[@name='productBrandNamePost']").Attributes["value"]?.Value.ToLower(culture));
                 product.ProductImages.Add(new SaveProductImageRequest()
                 {
-                    ImagePath = imageNode.Attributes["data-src"]?.Value
+                    ImagePath = imageUrl
                 });
 
                 products.Add(product);
@@ -77,8 +85,9 @@ namespace DataCrawler.ResourceWorkers
                 Console.WriteLine(response.StatusCode.ToString());
 
             int totalPage = _doc.DocumentNode.SelectNodes("//ul[@class='pagination']/li/a")
-                                                .Select(q => Convert.ToInt32(q.Attributes["data-page"].Value))
-                                                .OrderByDescending(x => x).FirstOrDefault();
+                                .Where(q => !string.IsNullOrEmpty(q.InnerText))
+                                .Select(q => Convert.ToInt32(q.InnerText))
+                                .OrderByDescending(x => x).FirstOrDefault();
 
             if (page <= totalPage)
                 GetProductsFromCategoryPage(url, page);

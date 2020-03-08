@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MarketLab.Domain.Core.Interfaces.Data;
 using MarketLab.Domain.Core.Interfaces.Data.BulkRepositories;
 using MarketLab.Domain.Products.Entitites;
 
@@ -7,14 +8,30 @@ namespace MarketLab.Infra.Data.EFCore.BulkRepositories
 {
     public class BulkBrandRepository : IBulkBrandRepository
     {
-        public Task<bool> BulkInsertAsync(IEnumerable<Brand> brands)
+        #region Fields
+        private readonly IUnitOfWorkRepository<Brand> _unitOfWorkRepository;
+        #endregion
+
+        #region CTOR
+        public BulkBrandRepository(IUnitOfWorkRepository<Brand> unitOfWorkRepository)
         {
-            throw new System.NotImplementedException();
+            _unitOfWorkRepository = unitOfWorkRepository;
+        }
+        #endregion
+        public async Task<bool> BulkInsertAsync(IEnumerable<Brand> Brands)
+        {
+            foreach (var item in Brands)
+                await _unitOfWorkRepository.CreateAsync(item);
+
+            return await _unitOfWorkRepository.SaveChangesAsync();
         }
 
-        public Task<bool> BulkUpdateAsync(IEnumerable<Brand> brands)
+        public async Task<bool> BulkUpdateAsync(IEnumerable<Brand> Brands)
         {
-            throw new System.NotImplementedException();
+            foreach (var item in Brands)
+                await _unitOfWorkRepository.UpdateAsync(item);
+
+            return await _unitOfWorkRepository.SaveChangesAsync();
         }
     }
 }

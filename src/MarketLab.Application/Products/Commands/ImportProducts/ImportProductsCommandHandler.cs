@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,6 +21,7 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
         private readonly IBrandRepository _brandRepository;
         private readonly IProductResourceRepository _productResourceRepository;
         private readonly IBulkProductRepository _bulkProductRepository;
+        private readonly IBulkBrandRepository _bulkBrandRepository;
         private readonly IBulkProductResourceRepository _bulkProductResourceRepository;
 
         private readonly IMapper _mapper;
@@ -29,6 +31,7 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
         public ImportProductsCommandHandler(
             IProductRepository productRepository,
             IBrandRepository brandRepository,
+            IBulkBrandRepository bulkBrandRepository,
             IProductResourceRepository productResourceRepository,
             IBulkProductRepository bulkProductRepository,
             IBulkProductResourceRepository bulkProductResourceRepository,
@@ -39,6 +42,7 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
             _brandRepository = brandRepository;
             _productResourceRepository = productResourceRepository;
             _bulkProductRepository = bulkProductRepository;
+            _bulkBrandRepository = bulkBrandRepository;
             _bulkProductResourceRepository = bulkProductResourceRepository;
             _mapper = mapper;
         }
@@ -50,44 +54,61 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
             var productResources = await _productResourceRepository.ListAsync(request.ResourceId);
             var newResources = new List<ProductResource>();
             var updateResources = new List<ProductResource>();
-            var newProducts = new List<Product>();
+            var brandList = new List<Brand>();
 
-            foreach (var item in request.Products)
+
+            var requestBrands = request.Products.GroupBy(g => new { g.Brand?.Name });
+
+            foreach (var requestBrand in requestBrands)
             {
-                var productResource = productResources.FirstOrDefault(q => q.IdentifierUrl.ToLower().Trim() == item.ProductResource.IdentifierUrl.ToLower().Trim());
-                productResource = _mapper.Map<SaveProductResourceRequest, ProductResource>(item.ProductResource, productResource);
+                string brandName = requestBrand.Key?.Name ?? "Markasız";
+                var brand = brands.FirstOrDefault(q => q.Name.ToLower().Trim() == brandName.ToLower().Trim()) ?? new Brand() { Name = brandName };
+                brand.Products = new List<Product>();
 
-                if (productResource.Id == 0)
+                var requestProducts = requestBrand.GroupBy(q =>
+                                                new { q.Name, q.Code, q.ProductResource.Stock, q.ProductResource.Price, q.ProductResource.IdentifierUrl });
+
+                foreach (var requestProduct in requestProducts)
                 {
+                    var productResource = productResources.FirstOrDefault(q => q.IdentifierUrl.ToLower().Trim() == requestProduct.Key.IdentifierUrl.ToLower().Trim())
+                                        ?? new ProductResource();
+
                     productResource.ResourceId = request.ResourceId;
+                    productResource.Stock = requestProduct.Key.Stock;
+                    productResource.Price = requestProduct.Key.Price;
+                    productResource.IdentifierUrl = requestProduct.Key.IdentifierUrl;
 
-                    var product = products.FirstOrDefault(q => q.Name.ToLower().Trim() == item.Name.ToLower().Trim());
 
-                    if (product == null)
+                    if (productResource.Id == 0)
                     {
-                        product = _mapper.Map<Product>(item);
-                        product.ProductResources.Add(productResource);
+                        var product = products.FirstOrDefault(q => q.Name.ToLower().Trim() == requestProduct.Key.Name.ToLower().Trim()) ?? new Product();
 
-                        if (product.Brand != null)
+                        if (product.Id == 0)
                         {
-                            var brand = brands.FirstOrDefault(q => q.Name.ToLower().Trim() == product.Brand.Name.ToLower().Trim());
-                            if (brand != null)
-                            {
-                                product.BrandId = brand.Id;
-                                product.Brand = null;
-                            }
+                            product.Name = requestProduct.Key.Name;
+                            product.Code = requestProduct.Key.Code;
+                            product.BrandId = brand.Id;
+                            product.ProductResources.Add(productResource);
+                            product.ProductImages = requestProduct.FirstOrDefault().ProductImages.Select(q => new ProductImage() { ImagePath = q.ImagePath }).ToList();
+                            brand.Products.Add(product);
                         }
-
-                        newProducts.Add(product);
+                        else
+                        {
+                            productResource.ProductId = product.Id;
+                            newResources.Add(productResource);
+                        }
                     }
                     else
-                        newResources.Add(productResource);
+                        updateResources.Add(productResource);
                 }
-                else
-                    updateResources.Add(productResource);
+
+                brandList.Add(brand);
             }
 
-            await _bulkProductRepository.BulkInsertAsync(newProducts);
+            var newBrands = brandList.Where(q => q.Id == 0).ToList();
+            var newProducts = brandList.Where(q => q.Id > 0).SelectMany(q => q.Products).ToList();
+
+            await _bulkBrandRepository.BulkInsertAsync(newBrands);
             await _bulkProductResourceRepository.BulkInsertAsync(newResources);
             await _bulkProductResourceRepository.BulkUpdateAsync(updateResources);
 

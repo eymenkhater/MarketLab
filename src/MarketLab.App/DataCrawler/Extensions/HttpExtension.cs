@@ -11,7 +11,7 @@ namespace DataCrawler.Extensions
             var response = _httpClient.GetAsync(url).Result;
 
             if (response.StatusCode != HttpStatusCode.OK)
-                throw new ArgumentException(response.StatusCode.ToString());
+                throw new ArgumentException($"{response.StatusCode.ToString()} URL : {url}");
 
             var body = response.Content.ReadAsStringAsync().Result;
 

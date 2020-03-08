@@ -7,6 +7,7 @@ namespace DataCrawler
         static void Main(string[] args)
         {
             MigrosWorker.Start();
+            // CarrefoursaWorker.Start();
         }
     }
 }
