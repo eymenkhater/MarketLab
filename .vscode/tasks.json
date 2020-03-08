@@ -31,6 +31,21 @@
             }
         },
         {
+            "label": "MarketLab.App.DataCrawler Build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MarketLab.App/DataCrawler/DataCrawler.csproj",
+                "/property:GenerateFullPaths=true"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "MarketLab.Application Build",
             "command": "dotnet",
             "type": "process",

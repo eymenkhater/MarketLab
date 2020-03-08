@@ -55,7 +55,7 @@ namespace MarketLab.API
             else
                 app.UseExceptionHandler("/error");
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

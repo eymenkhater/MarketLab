@@ -46,7 +46,7 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
         public async Task<ResponseBase<bool>> Handle(ImportProductsCommand request, CancellationToken cancellationToken)
         {
             var products = await _productRepository.ListAsync();
-
+            var brands = await _brandRepository.ListAsync();
             var productResources = await _productResourceRepository.ListAsync(request.ResourceId);
             var newResources = new List<ProductResource>();
             var updateResources = new List<ProductResource>();
@@ -67,6 +67,17 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
                     {
                         product = _mapper.Map<Product>(item);
                         product.ProductResources.Add(productResource);
+
+                        if (product.Brand != null)
+                        {
+                            var brand = brands.FirstOrDefault(q => q.Name.ToLower().Trim() == product.Brand.Name.ToLower().Trim());
+                            if (brand != null)
+                            {
+                                product.BrandId = brand.Id;
+                                product.Brand = null;
+                            }
+                        }
+
                         newProducts.Add(product);
                     }
                     else
