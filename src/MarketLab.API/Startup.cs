@@ -1,4 +1,6 @@
+using MarketLab.API.Services;
 using MarketLab.API.StartupSetup;
+using MarketLab.Application.Core.Interfaces.Identity;
 using MarketLab.Application.Core.Settings;
 using MarketLab.Application.StartupSetup;
 using MarketLab.Infra.Data.EFCore.StartupSetup;
@@ -44,6 +46,8 @@ namespace MarketLab.API
 
             services.AddSwaggerSetup();
             services.AddHttpContextAccessor();
+
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
         }
 

@@ -197,62 +197,183 @@ namespace MarketLab.API.Migrations.MarketLabDb
                         {
                             Id = 1,
                             BaseUrl = "https://www.kimmarket.com",
-                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 103, DateTimeKind.Local).AddTicks(2020),
+                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 12, DateTimeKind.Local).AddTicks(4170),
                             IsDeleted = false,
                             Name = "Kim",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(5440)
+                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 17, DateTimeKind.Local).AddTicks(9700)
                         },
                         new
                         {
                             Id = 2,
                             BaseUrl = "https://www.bim.com.tr/default.aspx",
-                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6940),
+                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1290),
                             IsDeleted = false,
                             Name = "Bim",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6940)
+                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1300)
                         },
                         new
                         {
                             Id = 3,
                             BaseUrl = "https://www.a101.com.tr",
-                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6970),
+                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1330),
                             IsDeleted = false,
                             Name = "A101",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6970)
+                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1330)
                         },
                         new
                         {
                             Id = 4,
                             BaseUrl = "https://www.sokmarket.com.tr/anasayfa",
-                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6980),
+                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340),
                             IsDeleted = false,
                             Name = "Şok",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6980)
+                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340)
                         },
                         new
                         {
                             Id = 5,
                             BaseUrl = "https://www.migros.com.tr",
-                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6980),
+                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340),
                             IsDeleted = false,
                             Name = "Migros",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6980)
+                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340)
                         },
                         new
                         {
                             Id = 6,
                             BaseUrl = "https://www.carrefoursa.com/tr",
-                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6990),
+                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340),
                             IsDeleted = false,
                             Name = "Carrefoursa",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6990)
+                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1350)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BaseUrl = "https://www.carrefoursa.com/tr",
+                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1350),
+                            IsDeleted = false,
+                            Name = "Öz Dilek",
+                            Status = 1,
+                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1350)
                         });
+                });
+
+            modelBuilder.Entity("MarketLab.Domain.ShoppingLists.Entities.ShoppingList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingLists");
+                });
+
+            modelBuilder.Entity("MarketLab.Domain.ShoppingLists.Entities.ShoppingListItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ShoppingListId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShoppingListId");
+
+                    b.ToTable("ShoppingListItems");
+                });
+
+            modelBuilder.Entity("MarketLab.Domain.Users.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("character varying(320)")
+                        .HasMaxLength(320);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("character varying(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("character varying(15)")
+                        .HasMaxLength(15);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("MarketLab.Domain.Products.Entitites.Product", b =>
@@ -277,6 +398,15 @@ namespace MarketLab.API.Migrations.MarketLabDb
                     b.HasOne("MarketLab.Domain.Products.Entitites.Product", "Product")
                         .WithMany("ProductResources")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MarketLab.Domain.ShoppingLists.Entities.ShoppingListItem", b =>
+                {
+                    b.HasOne("MarketLab.Domain.ShoppingLists.Entities.ShoppingList", null)
+                        .WithMany("ShoppingListItems")
+                        .HasForeignKey("ShoppingListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
