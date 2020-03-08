@@ -197,61 +197,61 @@ namespace MarketLab.API.Migrations.MarketLabDb
                         {
                             Id = 1,
                             BaseUrl = "https://www.kimmarket.com",
-                            CreatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 192, DateTimeKind.Local).AddTicks(3780),
+                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 103, DateTimeKind.Local).AddTicks(2020),
                             IsDeleted = false,
                             Name = "Kim",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(4460)
+                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(5440)
                         },
                         new
                         {
                             Id = 2,
                             BaseUrl = "https://www.bim.com.tr/default.aspx",
-                            CreatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6850),
+                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6940),
                             IsDeleted = false,
                             Name = "Bim",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6860)
+                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6940)
                         },
                         new
                         {
                             Id = 3,
                             BaseUrl = "https://www.a101.com.tr",
-                            CreatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6880),
+                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6970),
                             IsDeleted = false,
                             Name = "A101",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6880)
+                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6970)
                         },
                         new
                         {
                             Id = 4,
                             BaseUrl = "https://www.sokmarket.com.tr/anasayfa",
-                            CreatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6880),
+                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6980),
                             IsDeleted = false,
                             Name = "Şok",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6880)
+                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6980)
                         },
                         new
                         {
                             Id = 5,
                             BaseUrl = "https://www.migros.com.tr",
-                            CreatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6890),
+                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6980),
                             IsDeleted = false,
                             Name = "Migros",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6890)
+                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6980)
                         },
                         new
                         {
                             Id = 6,
                             BaseUrl = "https://www.carrefoursa.com/tr",
-                            CreatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6890),
+                            CreatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6990),
                             IsDeleted = false,
                             Name = "Carrefoursa",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 7, 19, 0, 13, 197, DateTimeKind.Local).AddTicks(6890)
+                            UpdatedAt = new DateTime(2020, 3, 8, 21, 43, 55, 108, DateTimeKind.Local).AddTicks(6990)
                         });
                 });
 
