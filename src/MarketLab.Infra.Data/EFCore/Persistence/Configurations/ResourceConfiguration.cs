@@ -15,7 +15,8 @@ namespace MarketLab.Infra.Data.EFCore.Persistence.Configurations
                 new Resource(){ Id= 3, Name ="A101",BaseUrl ="https://www.a101.com.tr"},
                 new Resource(){ Id= 4, Name ="Şok",BaseUrl ="https://www.sokmarket.com.tr/anasayfa"},
                 new Resource(){ Id= 5, Name ="Migros",BaseUrl ="https://www.migros.com.tr"},
-                new Resource(){ Id= 6, Name ="Carrefoursa",BaseUrl ="https://www.carrefoursa.com/tr"}
+                new Resource(){ Id= 6, Name ="Carrefoursa",BaseUrl ="https://www.carrefoursa.com/tr"},
+                new Resource(){ Id= 7, Name ="Öz Dilek",BaseUrl ="https://www.carrefoursa.com/tr"}
             };
 
             builder.HasData(resources);
