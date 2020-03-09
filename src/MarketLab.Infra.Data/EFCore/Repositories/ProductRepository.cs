@@ -29,6 +29,16 @@ namespace MarketLab.Infra.Data.EFCore.Repositories
                                                 .Where(q => q.ResourceId == resourceId && !q.IsDeleted))
                                             .Where(q => !q.IsDeleted).ToListAsync();
         }
+
+        public async Task<List<Product>> ListAsync(string keyword)
+        {
+            return (await _dbContext.Products.Include(q => q.ProductResources)
+                                            .Include(q => q.ProductImages)
+                                            .Where(q => q.ProductResources.Any(x => !x.IsDeleted) &&
+                                            q.ProductImages.Any(q => !q.IsDeleted) &&
+                                            q.Name.ToLower().Contains(keyword.ToLower().Trim()) &&
+                                             !q.IsDeleted).ToListAsync());
+        }
         #endregion
 
         #region GetAsync

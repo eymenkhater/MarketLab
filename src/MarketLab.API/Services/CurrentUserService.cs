@@ -6,7 +6,7 @@ namespace MarketLab.API.Services
     public class CurrentUserService : ICurrentUserService
     {
         #region Fields
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        // private readonly IHttpContextAccessor _httpContextAccessor;
         #endregion
         public CurrentUserService()
         {
