@@ -1,7 +1,6 @@
 using System.Reflection;
 using AutoMapper;
 using MarketLab.Application.Core.AutoMapper;
-using MarketLab.Application.Products.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,7 +12,6 @@ namespace MarketLab.Application.StartupSetup
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(typeof(ProductAutomapperProfile));
-            services.AddScoped<IProductService, ProductService>();
         }
     }
 }
