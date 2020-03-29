@@ -47,7 +47,7 @@ namespace MarketLab.API
             services.AddSwaggerSetup();
             services.AddHttpContextAccessor();
 
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         }
 
@@ -62,6 +62,7 @@ namespace MarketLab.API
             // app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 

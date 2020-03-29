@@ -2,7 +2,9 @@ using MarketLab.Domain.Core.Interfaces.Data;
 using MarketLab.Domain.Listings.Entities;
 using MarketLab.Domain.Products.Entitites;
 using MarketLab.Domain.Resources.Entities;
+using MarketLab.Domain.SearchLogs.Entities;
 using MarketLab.Domain.ShoppingLists.Entities;
+using MarketLab.Domain.Sliders.Entities;
 using MarketLab.Domain.Users.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +24,8 @@ namespace MarketLab.Infra.Data.EFCore.Persistence
         public DbSet<ShoppingList> ShoppingLists { get; set; }
         public DbSet<ShoppingListItem> ShoppingListItems { get; set; }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<SearchLog> SearchLogs { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

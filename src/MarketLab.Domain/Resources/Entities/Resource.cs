@@ -8,5 +8,7 @@ namespace MarketLab.Domain.Resources.Entities
         public int Type { get; set; } = ResourceType.Supermarket;
         public string Name { get; set; }
         public string BaseUrl { get; set; }
+        public string ImageUrl { get; set; }
+
     }
 }

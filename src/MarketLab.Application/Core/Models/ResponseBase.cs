@@ -2,7 +2,13 @@ namespace MarketLab.Application.Core.Models
 {
     public class ResponseBase<T>
     {
-        public ResponseBase(T data) => this.Data = data;
+        public ResponseBase(T data)
+        {
+            this.Code = 200;
+            this.Message = "OK";
+            this.Success = true;
+            this.Data = data;
+        }
         public ResponseBase(int code, bool success, string message, T data, string exception, object errors)
         {
             Code = code;

@@ -7,6 +7,8 @@ namespace MarketLab.Domain.Core.Interfaces.Data.Repositories
 {
     public interface IListingRepository : ISelectableRepository<Listing>
     {
-        Task<List<Listing>> ListAsync(int resourceId);
+        Task<List<Listing>> ListAsync(int productId);
+        Task<List<Listing>> ListFeaturedAsync();
+
     }
 }

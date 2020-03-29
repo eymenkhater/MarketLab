@@ -6,11 +6,5 @@ namespace MarketLab.Application.Products.Queries.SearchProduct
 {
     public class SearchProductQuery : DataQuery, IQuery<SearchProductResponse>
     {
-        public SearchProductQuery(string keyword)
-        {
-            Keyword = keyword;
-        }
-
-        public string Keyword { get; set; }
     }
 }

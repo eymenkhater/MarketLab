@@ -7,7 +7,7 @@ namespace MarketLab.Application.Core.Extensions
 {
     public static class DataQueryExtension
     {
-        public static IEnumerable<T> ToDataQueryList<T>(this IEnumerable<T> data, DataQuery query)
+        public static List<T> ToDataQueryList<T>(this IEnumerable<T> data, DataQuery query)
         {
             data = data.Search(query.Searching)
                         .Filter(query.Filtering)
@@ -15,7 +15,7 @@ namespace MarketLab.Application.Core.Extensions
 
             query.Paging.Total = data?.Count() ?? 0;
 
-            return data.ToPagedList(query.Paging);
+            return data.ToPagedList(query.Paging).ToList();
         }
     }
 }

@@ -8,8 +8,12 @@ using MarketLab.Application.Core.Extensions;
 using MarketLab.Application.Core.Handlers;
 using MarketLab.Application.Core.Interfaces;
 using MarketLab.Application.Core.Models;
+using MarketLab.Application.Products.Dtos;
 using MarketLab.Application.Products.Models.Responses;
+using MarketLab.Application.SearchLogs.Commands.CreateSearcLog;
 using MarketLab.Domain.Core.Interfaces.Data.Repositories;
+using MarketLab.Domain.Listings.Entities;
+using MediatR;
 
 namespace MarketLab.Application.Products.Queries.SearchProduct
 {
@@ -18,24 +22,41 @@ namespace MarketLab.Application.Products.Queries.SearchProduct
         #region Feilds
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
         #endregion
 
         #region CTOR
         public SearchProductQueryHandler(
             IProductRepository productRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IMediator mediator)
         {
             _productRepository = productRepository;
             _mapper = mapper;
+            _mediator = mediator;
         }
         #endregion
         public async Task<ResponseBase<SearchProductResponse>> Handle(SearchProductQuery request, CancellationToken cancellationToken)
         {
-            var products = (await _productRepository.ListAsync(request.Keyword)).ToDataQueryList(request);
-            var productResponse = new SearchProductResponse
-            (
-                products: _mapper.Map<List<ProductDto>>(products)
-            );
+            var products = await _productRepository.ListSearchAsync();
+
+            if (request.Searching.Any())
+                await _mediator.Send(new CreateSearchLogCommand(request.Searching[0].Keyword, products.Count));
+
+            products = products.ToDataQueryList(request);
+
+            var productsDto = new List<ProductSearchDto>();
+
+            foreach (var item in products)
+            {
+                var productDto = _mapper.Map<ProductSearchDto>(item);
+                productDto.MinPrice = item.Listings.Where(q => q.Price > 0).OrderBy(q => q.Price).FirstOrDefault()?.Price ?? 0;
+                productDto.ProductImages = _mapper.Map<List<ProductImageDto>>(item.ProductImages);
+                productDto.Resources = _mapper.Map<List<ResourceDto>>(item.Listings.Select(q => q.Resource));
+                productsDto.Add(productDto);
+            }
+
+            var productResponse = new SearchProductResponse(products: productsDto);
 
             return OK(productResponse);
         }
