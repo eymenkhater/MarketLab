@@ -9,6 +9,6 @@ namespace DataCrawler.Models
         public string Code { get; set; }
 
         public List<SaveProductImageRequest> ProductImages { get; set; }
-        public SaveProductResourceRequest ProductResource { get; set; }
+        public SaveListingRequest Listing { get; set; }
     }
 }

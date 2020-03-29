@@ -52,13 +52,13 @@ namespace DataCrawler.ResourceWorkers
                 var product = new ImportProductRequest()
                 {
                     Brand = new SaveBrandRequest(),
-                    ProductResource = new SaveProductResourceRequest(),
+                    Listing = new SaveListingRequest(),
                     ProductImages = new List<SaveProductImageRequest>()
                 };
 
                 product.Name = imageNode.Attributes["alt"]?.Value;
-                product.ProductResource.IdentifierUrl = BASE_URL + node.Attributes["href"]?.Value;
-                product.ProductResource.Price = Math.Round(Convert.ToDecimal(node.Attributes["data-monitor-price"]?.Value, culture), 2);
+                product.Listing.IdentifierUrl = BASE_URL + node.Attributes["href"]?.Value;
+                product.Listing.Price = Math.Round(Convert.ToDecimal(node.Attributes["data-monitor-price"]?.Value, culture), 2);
                 product.Brand.Name = culture.TextInfo.ToTitleCase(node.Attributes["data-monitor-brand"]?.Value);
                 product.ProductImages.Add(new SaveProductImageRequest()
                 {

@@ -11,6 +11,7 @@ using MarketLab.Application.Products.Models.Requests;
 using MarketLab.Domain.Core.Interfaces.Data.BulkRepositories;
 using MarketLab.Domain.Core.Interfaces.Data.Repositories;
 using MarketLab.Domain.Products.Entitites;
+using MarketLab.Domain.Listings.Entities;
 
 namespace MarketLab.Application.Products.Commands.ImportProducts
 {
@@ -19,10 +20,10 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
         #region Fields
         private readonly IProductRepository _productRepository;
         private readonly IBrandRepository _brandRepository;
-        private readonly IProductResourceRepository _productResourceRepository;
+        private readonly IListingRepository _listingRepository;
         private readonly IBulkProductRepository _bulkProductRepository;
         private readonly IBulkBrandRepository _bulkBrandRepository;
-        private readonly IBulkProductResourceRepository _bulkProductResourceRepository;
+        private readonly IBulkListingRepository _bulkListingRepository;
 
         private readonly IMapper _mapper;
         #endregion
@@ -32,18 +33,18 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
             IProductRepository productRepository,
             IBrandRepository brandRepository,
             IBulkBrandRepository bulkBrandRepository,
-            IProductResourceRepository productResourceRepository,
+            IListingRepository listingRepository,
             IBulkProductRepository bulkProductRepository,
-            IBulkProductResourceRepository bulkProductResourceRepository,
+            IBulkListingRepository bulkListingRepository,
             IMapper mapper
         )
         {
             _productRepository = productRepository;
             _brandRepository = brandRepository;
-            _productResourceRepository = productResourceRepository;
+            _listingRepository = listingRepository;
             _bulkProductRepository = bulkProductRepository;
             _bulkBrandRepository = bulkBrandRepository;
-            _bulkProductResourceRepository = bulkProductResourceRepository;
+            _bulkListingRepository = bulkListingRepository;
             _mapper = mapper;
         }
         #endregion
@@ -51,10 +52,10 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
         {
             var products = await _productRepository.ListAsync();
             var brands = await _brandRepository.ListAsync();
-            var productResources = await _productResourceRepository.ListAsync(request.ResourceId);
-            var newResources = new List<ProductResource>();
+            var listings = await _listingRepository.ListAsync(request.ResourceId);
+            var newResources = new List<Listing>();
             var newProductImages = new List<ProductImage>();
-            var updateResources = new List<ProductResource>();
+            var updateResources = new List<Listing>();
             var brandList = new List<Brand>();
 
 
@@ -67,20 +68,20 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
                 brand.Products = new List<Product>();
 
                 var requestProducts = requestBrand.GroupBy(q =>
-                                                new { q.Name, q.Code, q.ProductResource.Stock, q.ProductResource.Price, q.ProductResource.IdentifierUrl });
+                                                new { q.Name, q.Code, q.Listing.Stock, q.Listing.Price, q.Listing.IdentifierUrl });
 
                 foreach (var requestProduct in requestProducts)
                 {
-                    var productResource = productResources.FirstOrDefault(q => q.IdentifierUrl.ToLower().Trim() == requestProduct.Key.IdentifierUrl.ToLower().Trim())
-                                        ?? new ProductResource();
+                    var listing = listings.FirstOrDefault(q => q.IdentifierUrl.ToLower().Trim() == requestProduct.Key.IdentifierUrl.ToLower().Trim())
+                                        ?? new Listing();
 
-                    productResource.ResourceId = request.ResourceId;
-                    productResource.Stock = requestProduct.Key.Stock;
-                    productResource.Price = requestProduct.Key.Price;
-                    productResource.IdentifierUrl = requestProduct.Key.IdentifierUrl;
+                    listing.ResourceId = request.ResourceId;
+                    listing.Stock = requestProduct.Key.Stock;
+                    listing.Price = requestProduct.Key.Price;
+                    listing.IdentifierUrl = requestProduct.Key.IdentifierUrl;
 
 
-                    if (productResource.Id == 0)
+                    if (listing.Id == 0)
                     {
                         var product = products.FirstOrDefault(q => q.Name.ToLower().Trim() == requestProduct.Key.Name.ToLower().Trim()) ?? new Product();
 
@@ -89,18 +90,18 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
                             product.Name = requestProduct.Key.Name;
                             product.Code = requestProduct.Key.Code;
                             product.BrandId = brand.Id;
-                            product.ProductResources.Add(productResource);
+                            product.Listings.Add(listing);
                             product.ProductImages = requestProduct.FirstOrDefault().ProductImages.Select(q => new ProductImage() { ImagePath = q.ImagePath }).ToList();
                             brand.Products.Add(product);
                         }
                         else
                         {
-                            productResource.ProductId = product.Id;
-                            newResources.Add(productResource);
+                            listing.ProductId = product.Id;
+                            newResources.Add(listing);
                         }
                     }
                     else
-                        updateResources.Add(productResource);
+                        updateResources.Add(listing);
                 }
 
                 brandList.Add(brand);
@@ -111,8 +112,8 @@ namespace MarketLab.Application.Products.Commands.ImportProducts
 
             await _bulkBrandRepository.BulkInsertAsync(newBrands);
             await _bulkProductRepository.BulkInsertAsync(newProducts);
-            await _bulkProductResourceRepository.BulkInsertAsync(newResources);
-            await _bulkProductResourceRepository.BulkUpdateAsync(updateResources);
+            await _bulkListingRepository.BulkInsertAsync(newResources);
+            await _bulkListingRepository.BulkUpdateAsync(updateResources);
 
             return OK();
         }

@@ -20,21 +20,21 @@ namespace MarketLab.Infra.Data.EFCore.Repositories
         #region List Async
         public async Task<List<Product>> ListAsync()
         {
-            return (await _dbContext.Products.Include(q => q.ProductResources)
-                                            .Where(q => q.ProductResources.Any(x => !x.IsDeleted) && !q.IsDeleted).ToListAsync());
+            return (await _dbContext.Products.Include(q => q.Listings)
+                                            .Where(q => q.Listings.Any(x => !x.IsDeleted) && !q.IsDeleted).ToListAsync());
         }
         public async Task<List<Product>> ListAsync(int resourceId)
         {
-            return await _dbContext.Products.Include(q => q.ProductResources
+            return await _dbContext.Products.Include(q => q.Listings
                                                 .Where(q => q.ResourceId == resourceId && !q.IsDeleted))
                                             .Where(q => !q.IsDeleted).ToListAsync();
         }
 
         public async Task<List<Product>> ListAsync(string keyword)
         {
-            return (await _dbContext.Products.Include(q => q.ProductResources)
+            return (await _dbContext.Products.Include(q => q.Listings)
                                             .Include(q => q.ProductImages)
-                                            .Where(q => q.ProductResources.Any(x => !x.IsDeleted) &&
+                                            .Where(q => q.Listings.Any(x => !x.IsDeleted) &&
                                             q.ProductImages.Any(q => !q.IsDeleted) &&
                                             q.Name.ToLower().Contains(keyword.ToLower().Trim()) &&
                                              !q.IsDeleted).ToListAsync());

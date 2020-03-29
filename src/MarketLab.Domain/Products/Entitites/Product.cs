@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using MarketLab.Domain.Core.Entities;
+using MarketLab.Domain.Listings.Entities;
 
 namespace MarketLab.Domain.Products.Entitites
 {
@@ -10,7 +11,7 @@ namespace MarketLab.Domain.Products.Entitites
         public Product()
         {
             ProductImages = new HashSet<ProductImage>();
-            ProductResources = new HashSet<ProductResource>();
+            Listings = new HashSet<Listing>();
             BrandId = 1;
         }
         public int BrandId { get; set; }
@@ -20,7 +21,7 @@ namespace MarketLab.Domain.Products.Entitites
         #region Relations
         public Brand Brand { get; set; }
         public ICollection<ProductImage> ProductImages { get; set; }
-        public ICollection<ProductResource> ProductResources { get; set; }
+        public ICollection<Listing> Listings { get; set; }
 
         #endregion
     }

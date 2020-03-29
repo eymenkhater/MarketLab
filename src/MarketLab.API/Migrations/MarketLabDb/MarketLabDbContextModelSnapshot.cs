@@ -19,6 +19,48 @@ namespace MarketLab.API.Migrations.MarketLabDb
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("MarketLab.Domain.Listings.Entities.Listing", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("IdentifierUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ResourceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Listings");
+                });
+
             modelBuilder.Entity("MarketLab.Domain.Products.Entitites.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -119,48 +161,6 @@ namespace MarketLab.API.Migrations.MarketLabDb
                     b.ToTable("ProductImages");
                 });
 
-            modelBuilder.Entity("MarketLab.Domain.Products.Entitites.ProductResource", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("IdentifierUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ResourceId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductResources");
-                });
-
             modelBuilder.Entity("MarketLab.Domain.Resources.Entities.Resource", b =>
                 {
                     b.Property<int>("Id")
@@ -197,71 +197,61 @@ namespace MarketLab.API.Migrations.MarketLabDb
                         {
                             Id = 1,
                             BaseUrl = "https://www.kimmarket.com",
-                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 12, DateTimeKind.Local).AddTicks(4170),
+                            CreatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 824, DateTimeKind.Local).AddTicks(5170),
                             IsDeleted = false,
                             Name = "Kim",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 17, DateTimeKind.Local).AddTicks(9700)
+                            UpdatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(2810)
                         },
                         new
                         {
                             Id = 2,
                             BaseUrl = "https://www.bim.com.tr/default.aspx",
-                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1290),
+                            CreatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5030),
                             IsDeleted = false,
                             Name = "Bim",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1300)
+                            UpdatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5040)
                         },
                         new
                         {
                             Id = 3,
                             BaseUrl = "https://www.a101.com.tr",
-                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1330),
+                            CreatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5070),
                             IsDeleted = false,
                             Name = "A101",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1330)
+                            UpdatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5070)
                         },
                         new
                         {
                             Id = 4,
                             BaseUrl = "https://www.sokmarket.com.tr/anasayfa",
-                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340),
+                            CreatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5080),
                             IsDeleted = false,
                             Name = "Şok",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340)
+                            UpdatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5080)
                         },
                         new
                         {
                             Id = 5,
                             BaseUrl = "https://www.migros.com.tr",
-                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340),
+                            CreatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5080),
                             IsDeleted = false,
                             Name = "Migros",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340)
+                            UpdatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5080)
                         },
                         new
                         {
                             Id = 6,
                             BaseUrl = "https://www.carrefoursa.com/tr",
-                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1340),
+                            CreatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5090),
                             IsDeleted = false,
                             Name = "Carrefoursa",
                             Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1350)
-                        },
-                        new
-                        {
-                            Id = 7,
-                            BaseUrl = "https://www.carrefoursa.com/tr",
-                            CreatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1350),
-                            IsDeleted = false,
-                            Name = "Öz Dilek",
-                            Status = 1,
-                            UpdatedAt = new DateTime(2020, 3, 9, 2, 55, 24, 18, DateTimeKind.Local).AddTicks(1350)
+                            UpdatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 832, DateTimeKind.Local).AddTicks(5090)
                         });
                 });
 
@@ -374,6 +364,29 @@ namespace MarketLab.API.Migrations.MarketLabDb
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 834, DateTimeKind.Local).AddTicks(6130),
+                            Email = "eymenkhater@gmail.com",
+                            IsDeleted = false,
+                            Password = "123456778",
+                            Phone = "5325742007",
+                            Status = 1,
+                            UpdatedAt = new DateTime(2020, 3, 29, 3, 41, 6, 834, DateTimeKind.Local).AddTicks(6150),
+                            Username = "eymenkhater"
+                        });
+                });
+
+            modelBuilder.Entity("MarketLab.Domain.Listings.Entities.Listing", b =>
+                {
+                    b.HasOne("MarketLab.Domain.Products.Entitites.Product", "Product")
+                        .WithMany("Listings")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MarketLab.Domain.Products.Entitites.Product", b =>
@@ -388,15 +401,6 @@ namespace MarketLab.API.Migrations.MarketLabDb
                 {
                     b.HasOne("MarketLab.Domain.Products.Entitites.Product", null)
                         .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MarketLab.Domain.Products.Entitites.ProductResource", b =>
-                {
-                    b.HasOne("MarketLab.Domain.Products.Entitites.Product", "Product")
-                        .WithMany("ProductResources")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

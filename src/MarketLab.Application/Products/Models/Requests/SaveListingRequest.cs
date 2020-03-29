@@ -1,10 +1,10 @@
-namespace MarketLab.Application.Core.Dtos
+namespace MarketLab.Application.Products.Models.Requests
 {
-    public class ProductResourceDto
+    public class SaveListingRequest
     {
-        public string Name { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string IdentifierUrl { get; set; }
+
     }
 }

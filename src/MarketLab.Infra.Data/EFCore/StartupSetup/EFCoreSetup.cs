@@ -19,11 +19,11 @@ namespace MarketLab.Infra.Data.EFCore.StartupSetup
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IResourceRepository, ResourceRepository>();
-            services.AddScoped<IProductResourceRepository, ProductResourceRepository>();
+            services.AddScoped<IListingRepository, ListingRepository>();
 
             services.AddScoped<IBulkProductRepository, BulkProductRepository>();
             services.AddScoped<IBulkBrandRepository, BulkBrandRepository>();
-            services.AddScoped<IBulkProductResourceRepository, BulkProductResourceRepository>();
+            services.AddScoped<IBulkListingRepository, BulkListingRepository>();
 
         }
     }

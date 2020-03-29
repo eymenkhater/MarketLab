@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MarketLab.Application.Core.Dtos;
+using MarketLab.Application.Core.Extensions;
 using MarketLab.Application.Core.Handlers;
 using MarketLab.Application.Core.Interfaces;
 using MarketLab.Application.Core.Models;
@@ -30,7 +31,7 @@ namespace MarketLab.Application.Products.Queries.SearchProduct
         #endregion
         public async Task<ResponseBase<SearchProductResponse>> Handle(SearchProductQuery request, CancellationToken cancellationToken)
         {
-            var products = await _productRepository.ListAsync(request.Keyword);
+            var products = (await _productRepository.ListAsync(request.Keyword)).ToDataQueryList(request);
             var productResponse = new SearchProductResponse
             (
                 products: _mapper.Map<List<ProductDto>>(products)

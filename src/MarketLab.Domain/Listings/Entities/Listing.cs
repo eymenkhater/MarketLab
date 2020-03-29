@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using MarketLab.Domain.Core.Entities;
+using MarketLab.Domain.Products.Entitites;
 
-namespace MarketLab.Domain.Products.Entitites
+namespace MarketLab.Domain.Listings.Entities
 {
-    public class ProductResource : EntityBase
+    public class Listing : EntityBase
     {
         public int ProductId { get; set; }
         public int ResourceId { get; set; }

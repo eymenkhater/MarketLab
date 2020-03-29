@@ -1,4 +1,5 @@
 using MarketLab.Domain.Core.Interfaces.Data;
+using MarketLab.Domain.Listings.Entities;
 using MarketLab.Domain.Products.Entitites;
 using MarketLab.Domain.Resources.Entities;
 using MarketLab.Domain.ShoppingLists.Entities;
@@ -16,15 +17,19 @@ namespace MarketLab.Infra.Data.EFCore.Persistence
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-        public DbSet<ProductResource> ProductResources { get; set; }
+        public DbSet<Listing> Listings { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<ShoppingList> ShoppingLists { get; set; }
         public DbSet<ShoppingListItem> ShoppingListItems { get; set; }
         public DbSet<User> Users { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) =>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(MarketLabDbContext).Assembly);
+            DataSeeder.Seed(modelBuilder);
+
+        }
 
     }
 }

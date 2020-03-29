@@ -14,8 +14,7 @@ namespace MarketLab.API.Controllers
 
         #region CTOR
         public AccountController(
-            ILogger<AccountController> logger
-            )
+            ILogger<AccountController> logger)
         {
             _logger = logger;
         }

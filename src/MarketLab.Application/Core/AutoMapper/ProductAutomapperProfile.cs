@@ -2,6 +2,7 @@ using AutoMapper;
 using MarketLab.Application.Brands.Models.Requests;
 using MarketLab.Application.Core.Dtos;
 using MarketLab.Application.Products.Models.Requests;
+using MarketLab.Domain.Listings.Entities;
 using MarketLab.Domain.Products.Entitites;
 
 namespace MarketLab.Application.Core.AutoMapper
@@ -18,8 +19,8 @@ namespace MarketLab.Application.Core.AutoMapper
 
             CreateMap<ProductImage, SaveProductImageRequest>().ReverseMap();
             CreateMap<ProductImage, ProductImageDto>().ReverseMap();
-            CreateMap<ProductResource, SaveProductResourceRequest>().ReverseMap();
-            CreateMap<ProductResource, ProductResourceDto>().ReverseMap();
+            CreateMap<Listing, SaveListingRequest>().ReverseMap();
+            CreateMap<Listing, ListingDto>().ReverseMap();
 
             CreateMap<Brand, SaveBrandRequest>().ReverseMap();
             CreateMap<Brand, BrandDto>().ReverseMap();

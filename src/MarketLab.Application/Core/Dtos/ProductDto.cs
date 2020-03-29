@@ -9,6 +9,6 @@ namespace MarketLab.Application.Core.Dtos
         public string Code { get; set; }
         public BrandDto Brand { get; set; }
         public ICollection<ProductImageDto> ProductImages { get; set; }
-        public ICollection<ProductResourceDto> ProductResources { get; set; }
+        public ICollection<ListingDto> Listings { get; set; }
     }
 }

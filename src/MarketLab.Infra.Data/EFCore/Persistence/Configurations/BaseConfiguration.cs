@@ -8,6 +8,7 @@ namespace MarketLab.Infra.Data.EFCore.Persistence.Configurations
         public static void Configure<T>(EntityTypeBuilder<T> builder) where T : EntityBase
         {
             builder.HasKey(q => q.Id);
+            builder.Property(q => q.Id).ValueGeneratedOnAdd();
         }
     }
 }

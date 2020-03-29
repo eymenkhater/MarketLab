@@ -1,10 +1,9 @@
-namespace MarketLab.Application.Products.Models.Requests
+namespace DataCrawler.Models
 {
-    public class SaveProductResourceRequest
+    public class SaveListingRequest
     {
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string IdentifierUrl { get; set; }
-
     }
 }

@@ -81,7 +81,7 @@ namespace DataCrawler.ResourceWorkers
                     var product = new ImportProductRequest()
                     {
                         Brand = new SaveBrandRequest(),
-                        ProductResource = new SaveProductResourceRequest(),
+                        Listing = new SaveListingRequest(),
                         ProductImages = new List<SaveProductImageRequest>()
                     };
 
@@ -93,8 +93,8 @@ namespace DataCrawler.ResourceWorkers
                         price = Math.Round(Convert.ToDecimal(priceText, culture), 2);
                     }
                     product.Name = culture.TextInfo.ToTitleCase(node.SelectSingleNode("a").Attributes["title"]?.Value);
-                    product.ProductResource.IdentifierUrl = BASE_URL + node.SelectSingleNode("a").Attributes["href"]?.Value;
-                    product.ProductResource.Price = price;
+                    product.Listing.IdentifierUrl = BASE_URL + node.SelectSingleNode("a").Attributes["href"]?.Value;
+                    product.Listing.Price = price;
                     product.Brand = brand;
                     product.ProductImages.Add(new SaveProductImageRequest()
                     {
