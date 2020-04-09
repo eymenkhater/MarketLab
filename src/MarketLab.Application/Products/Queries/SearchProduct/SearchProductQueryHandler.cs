@@ -38,25 +38,24 @@ namespace MarketLab.Application.Products.Queries.SearchProduct
         #endregion
         public async Task<ResponseBase<SearchProductResponse>> Handle(SearchProductQuery request, CancellationToken cancellationToken)
         {
-            var products = await _productRepository.ListSearchAsync();
+            var products = await _productRepository.ListSearchAsync(request.Searching[0].Keyword);
+            products = products.ToDataQueryList(request);
 
             if (request.Searching.Any())
                 await _mediator.Send(new CreateSearchLogCommand(request.Searching[0].Keyword, products.Count));
 
-            products = products.ToDataQueryList(request);
-
             var productsDto = new List<ProductSearchDto>();
-
             foreach (var item in products)
             {
                 var productDto = _mapper.Map<ProductSearchDto>(item);
-                productDto.MinPrice = item.Listings.Where(q => q.Price > 0).OrderBy(q => q.Price).FirstOrDefault()?.Price ?? 0;
+                productDto.MinPrice = item.Listings.Min(q => q.Price);
                 productDto.ProductImages = _mapper.Map<List<ProductImageDto>>(item.ProductImages);
                 productDto.Resources = _mapper.Map<List<ResourceDto>>(item.Listings.Select(q => q.Resource));
+
                 productsDto.Add(productDto);
             }
 
-            var productResponse = new SearchProductResponse(products: productsDto);
+            var productResponse = new SearchProductResponse(productsDto);
 
             return OK(productResponse);
         }

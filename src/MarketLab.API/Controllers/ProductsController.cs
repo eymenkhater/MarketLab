@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MarketLab.API.Common.Controllers;
+using MarketLab.Application.Core.Queries.Primitives;
 using MarketLab.Application.Listings.Queries.GetFeaturedListings;
 using MarketLab.Application.Listings.Queries.GetSelectedProductListings;
 using MarketLab.Application.Products.Commands.ImportProducts;
@@ -30,9 +31,14 @@ namespace MarketLab.API.Controllers
         #endregion
 
         #region Search Async
-        [HttpGet("search")]
-        public async Task<IActionResult> SearchAsync([FromBody]SearchProductQuery query)
+        [HttpGet("search/{keyword}")]
+        public async Task<IActionResult> SearchAsync(string keyword)
         {
+            var query = new SearchProductQuery()
+            {
+                Searching = new List<SearchingQuery> { new SearchingQuery() { Field = "name", Keyword = keyword } },
+                Paging = new PagingQuery() { Page = 1, ItemsPerPage = 1000 }
+            };
             return Ok(await _mediator.Send(query));
         }
         #endregion

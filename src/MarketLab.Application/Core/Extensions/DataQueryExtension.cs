@@ -13,7 +13,8 @@ namespace MarketLab.Application.Core.Extensions
                         .Filter(query.Filtering)
                         .Sort(query.Sorting);
 
-            query.Paging.Total = data?.Count() ?? 0;
+
+
 
             return data.ToPagedList(query.Paging).ToList();
         }

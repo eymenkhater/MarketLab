@@ -46,7 +46,7 @@ namespace MarketLab.Infra.Data.EFCore.Repositories
                         && !q.IsDeleted
                         && !q.Product.IsDeleted
                         && !q.Resource.IsDeleted
-                        && q.Price > 0).OrderBy(q => q.Price).Take(20).ToListAsync();
+                        && q.Price > 0).OrderByDescending(q => q.Price).Take(50).ToListAsync();
         }
         #endregion
 
